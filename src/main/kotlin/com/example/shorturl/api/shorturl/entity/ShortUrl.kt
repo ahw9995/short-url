@@ -10,8 +10,8 @@ data class ShortUrl(
     val seq: Long?,
     @Column
     val id: String,
-    @Column
+    @Column(name = "long_url")
     val longUrl: String,
-    @Column
+    @Column(name = "created_at")
     val createdAt: LocalDateTime?
 )
