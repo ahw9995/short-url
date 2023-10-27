@@ -4,7 +4,7 @@ import com.example.shorturl.api.shorturl.entity.ShortUrl
 
 data class ShortUrlRes(
     val seq: Long?,
-    val id: String,
+    val id: String?,
     val longUrl: String
 ) {
     companion object {

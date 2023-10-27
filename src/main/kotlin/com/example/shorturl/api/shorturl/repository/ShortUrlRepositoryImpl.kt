@@ -13,8 +13,20 @@ class ShortUrlRepositoryImpl(private val queryFactory: JPAQueryFactory): ShortUr
             .where(shortUrl.seq.eq(seq)).fetchOne()
     }
 
+    override fun findById(id: String): ShortUrl? {
+        return queryFactory.selectFrom(shortUrl)
+            .where(shortUrl.id.eq(id)).fetchOne()
+    }
+
     override fun findByLongUrl(longUrl: String): ShortUrl? {
         return queryFactory.selectFrom(shortUrl)
             .where(shortUrl.longUrl.eq(longUrl)).fetchFirst()
+    }
+
+    override fun updateIdBySeq(data: ShortUrl) {
+        queryFactory.update(shortUrl)
+            .set(shortUrl.id, data.id)
+            .where(shortUrl.seq.eq(data.seq))
+            .execute()
     }
 }

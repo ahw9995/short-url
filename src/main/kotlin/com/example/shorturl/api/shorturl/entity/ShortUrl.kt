@@ -9,7 +9,7 @@ data class ShortUrl(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val seq: Long?,
     @Column
-    val id: String,
+    var id: String?,
     @Column(name = "long_url")
     val longUrl: String,
     @Column(name = "created_at")

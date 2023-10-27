@@ -6,5 +6,9 @@ interface ShortUrlRepositoryCustom {
 
     fun findBySeq(seq: Long): ShortUrl?
 
+    fun findById(id: String): ShortUrl?
+
     fun findByLongUrl(longUrl: String): ShortUrl?
+
+    fun updateIdBySeq(shortUrl: ShortUrl)
 }

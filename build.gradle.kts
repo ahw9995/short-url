@@ -31,7 +31,10 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-web") {
+        exclude("org.springframework.boot", "spring-boot-starter-tomcat")
+    }
+    implementation("org.springframework.boot:spring-boot-starter-undertow")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("jakarta.validation:jakarta.validation-api:3.0.2")
@@ -44,6 +47,11 @@ dependencies {
     //querydsl
     implementation("com.querydsl:querydsl-jpa:$querydslVersion:jakarta")
     kapt("com.querydsl:querydsl-apt:${querydslVersion}:jakarta")
+
+    // logging
+    implementation("io.github.microutils", "kotlin-logging-jvm", "2.1.20")
+
+    implementation("commons-io", "commons-io", "2.6")
 
 }
 
