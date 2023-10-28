@@ -8,6 +8,8 @@ import com.example.shorturl.api.shorturl.model.ShortUrlRes
 import com.example.shorturl.api.shorturl.model.ShortUrlSaveReq
 import com.example.shorturl.api.shorturl.repository.ShortUrlRepository
 import com.example.shorturl.api.shorturl.util.Base62
+import jakarta.servlet.http.HttpServletRequest
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -21,6 +23,7 @@ import java.net.URI
 @Transactional(readOnly = true)
 class ShortUrlService(private val shortUrlRepository: ShortUrlRepository) {
 
+    @Cacheable(value = ["shortUrlCache"], key = "#id")
     fun getRedirectResponseEntity(id: String): ResponseEntity<Any> {
         val longUrl = this.getShortUrl(id)
         val headers = HttpHeaders()
@@ -43,13 +46,13 @@ class ShortUrlService(private val shortUrlRepository: ShortUrlRepository) {
     }
 
     @Transactional
-    fun addShortUrl(saveReq: ShortUrlSaveReq): ShortUrlRes {
+    fun addShortUrl(saveReq: ShortUrlSaveReq, request: HttpServletRequest): ShortUrlRes {
 
         // db에 같은 url 존재하는지 체크
         val checkUrl: ShortUrl? = shortUrlRepository.findByLongUrl(saveReq.longUrl)
 
         if (checkUrl != null) {
-            return ShortUrlRes.fromEntity(checkUrl)
+            return ShortUrlRes(checkUrl.id, request)
         }
 
         // 없으면 저장
@@ -70,6 +73,6 @@ class ShortUrlService(private val shortUrlRepository: ShortUrlRepository) {
         // 정보 업데이트
         shortUrl.id = id
         shortUrlRepository.updateIdBySeq(shortUrl)
-        return ShortUrlRes.fromEntity(shortUrl)
+        return ShortUrlRes(id, request)
     }
 }

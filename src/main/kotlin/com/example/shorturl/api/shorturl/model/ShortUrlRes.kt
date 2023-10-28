@@ -1,15 +1,11 @@
 package com.example.shorturl.api.shorturl.model
 
-import com.example.shorturl.api.shorturl.entity.ShortUrl
+import jakarta.servlet.http.HttpServletRequest
 
 data class ShortUrlRes(
-    val seq: Long?,
-    val id: String?,
-    val longUrl: String
+    val shortUrl: String
 ) {
-    companion object {
-        fun fromEntity(shortUrl: ShortUrl): ShortUrlRes {
-            return ShortUrlRes(shortUrl.seq, shortUrl.id, shortUrl.longUrl)
-        }
-    }
+    constructor(id: String?, request: HttpServletRequest): this(
+        shortUrl = "${request.scheme}://${request.serverName}:${request.serverPort}/${id}"
+    )
 }

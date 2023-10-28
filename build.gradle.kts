@@ -53,6 +53,8 @@ dependencies {
 
     implementation("commons-io", "commons-io", "2.6")
 
+    // cache
+    implementation("org.springframework.boot:spring-boot-starter-cache")
 }
 
 kapt {
