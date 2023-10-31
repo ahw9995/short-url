@@ -8,10 +8,10 @@ data class ShortUrl(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val seq: Long?,
-    @Column
+    @Column(nullable = true)
     var id: String?,
-    @Column(name = "long_url")
+    @Column(name = "long_url", nullable = false)
     val longUrl: String,
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     val createdAt: LocalDateTime?
 )
