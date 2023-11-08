@@ -64,7 +64,7 @@ class ShortUrlService(private val shortUrlRepository: ShortUrlRepository) {
             throw CreateShortUrlFailedException(ErrorMessageType.CREATE_SHORT_URL_FAILED_EXCEPTION)
         }
 
-        val id = Base62.encode(shortUrl.seq)
+        val id = Base62.encode(shortUrl.seq!!)
 
         if (!StringUtils.hasText(id)) {
             throw CreateShortUrlFailedException(ErrorMessageType.CREATE_ID_FAILED_EXCEPTION)
